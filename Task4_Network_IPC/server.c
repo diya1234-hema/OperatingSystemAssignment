@@ -56,10 +56,21 @@ int main()
 
     printf("Client connected\n");
 
-    if(strlen(buffer) == 0)
+int bytes = read(client_socket, buffer, sizeof(buffer));
+
+if(bytes <= 0)
+{
+    printf("Error receiving data\n");
+    close(client_socket);
+    close(server_fd);
+    return 1;
+}
+
+if(strlen(buffer) == 0)
 {
     char *error = "Invalid Empty Message";
     send(client_socket, error, strlen(error), 0);
+
     close(client_socket);
     close(server_fd);
     return 1;
@@ -68,20 +79,20 @@ int main()
 if(strcmp(buffer, "admin:os123") == 0)
 {
     printf("Valid user connected\n");
+
     send(client_socket, message, strlen(message), 0);
 }
 else
 {
     char *error = "Authentication Failed";
+
     send(client_socket, error, strlen(error), 0);
 }
 
-printf("Client sent: %s\n", buffer);
+printf("Client says: %s\n", buffer);
 
-    send(client_socket, message, strlen(message), 0);
+close(client_socket);
+close(server_fd);
 
-    close(client_socket);
-    close(server_fd);
-
-    return 0;
+return 0;
 }
