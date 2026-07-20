@@ -56,7 +56,14 @@ int main()
 
     printf("Client connected\n");
 
-    read(client_socket, buffer, sizeof(buffer));
+    if(strlen(buffer) == 0)
+{
+    char *error = "Invalid Empty Message";
+    send(client_socket, error, strlen(error), 0);
+    close(client_socket);
+    close(server_fd);
+    return 1;
+}
 
 if(strcmp(buffer, "admin:os123") == 0)
 {
