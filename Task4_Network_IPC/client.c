@@ -11,7 +11,7 @@ int main()
     int sock = 0;
     struct sockaddr_in serv_addr;
     char buffer[1024] = {0};
-    char message[] = "Hello from Client";
+    char message[] = "admin:os123";
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
 

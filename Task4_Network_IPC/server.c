@@ -13,7 +13,7 @@ int main()
     int addrlen = sizeof(address);
 
     char buffer[1024] = {0};
-    char *message = "Hello from Server";
+    char *message = "Authntication Sucessful";
 
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -57,7 +57,19 @@ int main()
     printf("Client connected\n");
 
     read(client_socket, buffer, sizeof(buffer));
-    printf("Client says: %s\n", buffer);
+
+if(strcmp(buffer, "admin:os123") == 0)
+{
+    printf("Valid user connected\n");
+    send(client_socket, message, strlen(message), 0);
+}
+else
+{
+    char *error = "Authentication Failed";
+    send(client_socket, error, strlen(error), 0);
+}
+
+printf("Client sent: %s\n", buffer);
 
     send(client_socket, message, strlen(message), 0);
 
